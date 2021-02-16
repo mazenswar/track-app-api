@@ -7,4 +7,10 @@ module.exports = (req, res, next) => {
   if (!authorization) {
     return;
   }
+  const token = authorization.replace('Bearer ', '');
+  jwt.verify(token, 'mysecretkey', () => {
+    if (err) {
+      return res.status(401).send({ error: 'You must be logged in.' });
+    }
+  });
 };
