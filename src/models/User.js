@@ -31,7 +31,7 @@ userSchema.pre('save', function (next) {
   });
 });
 
-userSchema.methods.comparePassword = function (candiatePassword) {
+userSchema.methods.comparePasswords = function (candiatePassword) {
   const user = this;
   return new Promise((resolve, reject) => {
     bcrypt.compare(candiatePassword, user.password, (err, isMatch) => {

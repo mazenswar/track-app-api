@@ -1,7 +1,9 @@
 require('./models/User');
+require('./models/Track');
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
+const trackRoutes = require('./routes/trackRoutes');
 const bodyParser = require('body-parser');
 const mongoUri = require('../ENV');
 const requireAuth = require('./middlewares/requireAuth');
@@ -9,6 +11,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(authRoutes);
+app.use(trackRoutes);
 
 mongoose.connect(mongoUri, {
   useNewUrlParser: true,
@@ -21,7 +24,7 @@ mongoose.connection.on('connected', () => {
 });
 
 mongoose.connection.on('error', (error) => {
-  console.log('Error connecting to mongo', err);
+  console.log('Error connecting to mongo', error);
 });
 
 app.get('/', requireAuth, (req, res) => {
